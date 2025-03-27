@@ -36,35 +36,3 @@ export const persistentStorage = {
     }
   }
 };
-
-// Auto-login utility
-export const autoAuth = {
-  // Set a default user state in storage
-  initialize: () => {
-    const existingUser = persistentStorage.getItem('user');
-    if (!existingUser) {
-      // Create a default user object
-      const defaultUser = {
-        id: 'default-user',
-        name: 'User',
-        isAuthenticated: true,
-        timestamp: new Date().toISOString()
-      };
-      persistentStorage.setItem('user', JSON.stringify(defaultUser));
-      console.log('Auto-initialized default user');
-    }
-    return JSON.parse(persistentStorage.getItem('user') || '{}');
-  },
-
-  // Get the current user
-  getUser: () => {
-    const userData = persistentStorage.getItem('user');
-    return userData ? JSON.parse(userData) : null;
-  },
-
-  // Check if user is authenticated
-  isAuthenticated: () => {
-    const user = autoAuth.getUser();
-    return user && user.isAuthenticated === true;
-  }
-};
